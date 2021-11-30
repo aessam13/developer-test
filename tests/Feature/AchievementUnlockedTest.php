@@ -8,14 +8,11 @@ use App\Listeners\AchievementUnlockedListener;
 use App\Models\Achievement;
 use App\Models\Badge;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class AchievementUnlockedTest extends TestCase
 {
-    use DatabaseMigrations;
-
     protected function setUp() : void
     {
         parent::setUp();

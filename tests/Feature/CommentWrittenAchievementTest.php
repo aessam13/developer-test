@@ -8,14 +8,11 @@ use App\Listeners\CommentWrittenListener;
 use App\Models\Achievement;
 use App\Models\Comment;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class CommentWrittenAchievementTest extends TestCase
 {
-    use DatabaseMigrations;
-
     public $user;
 
     protected function setUp() : void

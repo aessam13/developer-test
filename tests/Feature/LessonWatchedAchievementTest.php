@@ -8,14 +8,11 @@ use App\Listeners\LessonWatchedListener;
 use App\Models\Achievement;
 use App\Models\Lesson;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class LessonWatchedAchievementTest extends TestCase
 {
-    use DatabaseMigrations;
-
     /** @var User */
     public $user;
 

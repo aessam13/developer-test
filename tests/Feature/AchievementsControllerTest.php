@@ -5,13 +5,10 @@ namespace Tests\Feature;
 use App\Models\Achievement;
 use App\Models\Badge;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class AchievementsControllerTest extends TestCase
 {
-    use DatabaseMigrations;
-
     public function test_user_achievements()
     {
         $user = User::factory()->create();
