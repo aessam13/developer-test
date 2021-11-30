@@ -20,4 +20,7 @@ class Achievement extends Model
         'number',
         'type',
     ];
+
+    const LESSON = 1;
+    const COMMENT = 2;
 }
