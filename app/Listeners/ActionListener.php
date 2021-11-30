@@ -7,7 +7,7 @@ use App\Models\Achievement;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class LessonWatchedListener
+class ActionListener
 {
     /**
      * Create the event listener.
@@ -25,12 +25,15 @@ class LessonWatchedListener
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle($action_count, $achievements, $user)
     {
-        $user_lessons_watched_count = $event->user->watched()->count();
-        $achievements = Achievement::whereType(Achievement::LESSON)->get();
-
-        $action_listener = new ActionListener();
-        $action_listener->handle($user_lessons_watched_count, $achievements, $event->user);
+        foreach ($achievements as $achievement)
+        {
+            if($action_count == $achievement->number)
+            {
+                $user->achievements()->attach($achievement);
+                AchievementUnlocked::dispatch($achievement->title, $user);
+            }
+        }
     }
 }

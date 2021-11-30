@@ -29,13 +29,7 @@ class CommentWrittenListener
         $user_comments_count = $comment_user->comments()->count();
         $achievements = Achievement::whereType(Achievement::COMMENT)->get();
 
-        foreach ($achievements as $achievement)
-        {
-            if($user_comments_count == $achievement->number)
-            {
-                $comment_user->achievements()->attach($achievement);
-                AchievementUnlocked::dispatch($achievement->title, $comment_user);
-            }
-        }
+        $action_listener = new ActionListener();
+        $action_listener->handle($user_comments_count, $achievements, $comment_user);
     }
 }
