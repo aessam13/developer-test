@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Collection;
 
 class User extends Authenticatable
 {
@@ -81,5 +82,48 @@ class User extends Authenticatable
     public function badges(): BelongsToMany
     {
         return $this->belongsToMany(Badge::class);
+    }
+
+    public function next_available_achievements(): Collection
+    {
+        $current_comment_achievements = $this->achievements()->whereType(Achievement::COMMENT)->orderByDesc('number')->first();
+        $current_lesson_achievements = $this->achievements()->whereType(Achievement::LESSON)->orderByDesc('number')->first();
+
+        $next_available_comment_achievement = Achievement::whereType(Achievement::COMMENT)
+            ->where('number', '>' , $current_comment_achievements ? $current_comment_achievements->number : 0)
+            ->orderBy('number')
+            ->first();
+
+        $next_available_lesson_achievement = Achievement::whereType(Achievement::LESSON)
+            ->where('number', '>' , $current_lesson_achievements ? $current_lesson_achievements->number : 0)
+            ->orderBy('number')
+            ->first();
+
+        return collect(array_filter([
+            $next_available_comment_achievement,
+            $next_available_lesson_achievement
+        ]));
+    }
+
+    public function next_badge()
+    {
+        $current_badge = $this->badges()->orderBy('number')->get();
+
+        $next_badge = Badge::where('number' , '>' , $current_badge->last()->number)
+            ->orderBy('number')
+            ->first();
+
+        return $next_badge ? $next_badge->title : null;
+    }
+
+    public function remaining_to_unlock_next_badge(): int
+    {
+        $badges = $this->badges()->orderBy('number')->get();
+
+        $next_badge = Badge::where('number' , '>' , $badges->last()->number)
+            ->orderBy('number')
+            ->first();
+
+        return $next_badge ? $next_badge->number - $badges->last()->number : 0;
     }
 }
