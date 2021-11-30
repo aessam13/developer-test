@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBadgeUsersTable extends Migration
+class CreateBadgeUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateBadgeUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('badge_users', function (Blueprint $table) {
+        Schema::create('badge_user', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Badge::class);
             $table->foreignIdFor(User::class);
