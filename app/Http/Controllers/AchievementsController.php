@@ -14,7 +14,7 @@ class AchievementsController extends Controller
             'next_available_achievements' => $user->next_available_achievements() ? AchievementResource::collection($user->next_available_achievements()) : null,
             'current_badge' => !$user->badges->isEmpty() ? $user->badges->last()->title : null,
             'next_badge' => $user->next_badge(),
-            'remaining_to_unlock_next_badge' => $user->remaining_to_unlock_next_badge()
+            'remaining_to_unlock_next_badge' => $user->remaining_to_unlock_next_badge(),
         ]);
     }
 }

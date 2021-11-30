@@ -15,22 +15,22 @@ class BadgeSeeder extends Seeder
     public function run()
     {
         DB::table('badges')->insert([
-            'title' => "Beginner",
+            'title' => 'Beginner',
             'number' => 0,
         ]);
 
         DB::table('badges')->insert([
-            'title' => "Intermediate",
+            'title' => 'Intermediate',
             'number' => 4,
         ]);
 
         DB::table('badges')->insert([
-            'title' => "Advanced",
+            'title' => 'Advanced',
             'number' => 8,
         ]);
 
         DB::table('badges')->insert([
-            'title' => "Master",
+            'title' => 'Master',
             'number' => 10,
         ]);
     }

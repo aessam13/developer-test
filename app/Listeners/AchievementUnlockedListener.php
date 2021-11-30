@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Events\BadgeUnlocked;
 use App\Models\Badge;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class AchievementUnlockedListener
 {
@@ -30,15 +28,11 @@ class AchievementUnlockedListener
         $achievement_count = $event->user->achievements()->count();
         $badges = Badge::all();
 
-        foreach ($badges as $badge)
-        {
-            if($achievement_count == $badge->number)
-            {
+        foreach ($badges as $badge) {
+            if ($achievement_count == $badge->number) {
                 $event->user->badges()->attach($badge);
                 BadgeUnlocked::dispatch($badge->title, $event->user);
             }
         }
-
-
     }
 }

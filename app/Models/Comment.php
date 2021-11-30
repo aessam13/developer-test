@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
@@ -17,7 +16,7 @@ class Comment extends Model
      */
     protected $fillable = [
         'body',
-        'user_id'
+        'user_id',
     ];
 
     /**

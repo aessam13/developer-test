@@ -18,7 +18,7 @@ class CommentWrittenAchievementTest extends TestCase
 
     public $user;
 
-    protected function setUp(): void
+    protected function setUp() : void
     {
         parent::setUp();
 
@@ -29,10 +29,12 @@ class CommentWrittenAchievementTest extends TestCase
     {
         Event::fake();
 
-        $this->assertDatabaseMissing('achievement_user',
+        $this->assertDatabaseMissing(
+            'achievement_user',
             [
-                'user_id' => $this->user->id
-            ]);
+                'user_id' => $this->user->id,
+            ]
+        );
 
         Event::assertNotDispatched(AchievementUnlocked::class);
     }
@@ -57,13 +59,15 @@ class CommentWrittenAchievementTest extends TestCase
         $comment_written_listener = new CommentWrittenListener();
         $comment_written_listener->handle($comment_written_event);
 
-        $this->assertDatabaseHas('achievement_user',
+        $this->assertDatabaseHas(
+            'achievement_user',
             [
                 'achievement_id' => $first_comment_achievement->id,
-                'user_id' => $this->user->id
-            ]);
+                'user_id' => $this->user->id,
+            ]
+        );
 
-        Event::assertDispatched(function (AchievementUnlocked $event) use($first_comment_achievement) {
+        Event::assertDispatched(function (AchievementUnlocked $event) use ($first_comment_achievement) {
             return $event->user->id == $this->user->id && $event->achievement_name == $first_comment_achievement->title;
         });
     }
@@ -98,17 +102,21 @@ class CommentWrittenAchievementTest extends TestCase
         $comment_written_listener = new CommentWrittenListener();
         $comment_written_listener->handle($comment_written_event);
 
-        $this->assertDatabaseMissing('achievement_user',
+        $this->assertDatabaseMissing(
+            'achievement_user',
             [
                 'achievement_id' => $first_comment_achievement->id,
-                'user_id' => $this->user->id
-            ]);
+                'user_id' => $this->user->id,
+            ]
+        );
 
-        $this->assertDatabaseMissing('achievement_user',
+        $this->assertDatabaseMissing(
+            'achievement_user',
             [
                 'achievement_id' => $third_comments_achievement->id,
-                'user_id' => $this->user->id
-            ]);
+                'user_id' => $this->user->id,
+            ]
+        );
 
         Event::assertNotDispatched(AchievementUnlocked::class);
     }
@@ -143,13 +151,15 @@ class CommentWrittenAchievementTest extends TestCase
         $comment_written_listener = new CommentWrittenListener();
         $comment_written_listener->handle($comment_written_event);
 
-        $this->assertDatabaseHas('achievement_user',
+        $this->assertDatabaseHas(
+            'achievement_user',
             [
                 'achievement_id' => $third_comments_achievement->id,
-                'user_id' => $this->user->id
-            ]);
+                'user_id' => $this->user->id,
+            ]
+        );
 
-        Event::assertDispatched(function (AchievementUnlocked $event) use($third_comments_achievement) {
+        Event::assertDispatched(function (AchievementUnlocked $event) use ($third_comments_achievement) {
             return $event->user->id == $this->user->id && $event->achievement_name == $third_comments_achievement->title;
         });
     }

@@ -9,7 +9,7 @@ class AchievementResource extends JsonResource
     /**
      * Transform the resource into an array.
      */
-    public function toArray($request): array
+    public function toArray($request) : array
     {
         return [
             'title' => $this->title,

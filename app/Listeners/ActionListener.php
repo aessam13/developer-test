@@ -3,9 +3,6 @@
 namespace App\Listeners;
 
 use App\Events\AchievementUnlocked;
-use App\Models\Achievement;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class ActionListener
 {
@@ -27,10 +24,8 @@ class ActionListener
      */
     public function handle($action_count, $achievements, $user)
     {
-        foreach ($achievements as $achievement)
-        {
-            if($action_count == $achievement->number)
-            {
+        foreach ($achievements as $achievement) {
+            if ($action_count == $achievement->number) {
                 $user->achievements()->attach($achievement);
                 AchievementUnlocked::dispatch($achievement->title, $user);
             }

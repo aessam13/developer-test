@@ -44,23 +44,23 @@ class AchievementsControllerTest extends TestCase
         $user->achievements()->attach($second_achievement);
 
         $intermediate_badge = Badge::factory()->create([
-            'title' => "Intermediate",
+            'title' => 'Intermediate',
             'number' => 4,
         ]);
 
         $advanced_badge = Badge::factory()->create([
-            'title' => "Advanced",
+            'title' => 'Advanced',
             'number' => 8,
         ]);
 
         $user->badges()->attach($intermediate_badge);
 
-        $response = $this->getJson('/users/'. $user->id .'/achievements');
+        $response = $this->getJson('/users/' . $user->id . '/achievements');
 
         $response->assertSee($first_achievement->title);
         $response->assertSee($second_achievement->title);
 
-        $this->assertEquals($advanced_badge->title , $response->json('next_badge'));
+        $this->assertEquals($advanced_badge->title, $response->json('next_badge'));
     }
 
     public function test_user_has_the_last_badge()
@@ -82,15 +82,14 @@ class AchievementsControllerTest extends TestCase
         $user->achievements()->attach($fifth_comment_achievement);
         $user->achievements()->attach($fifth_lesson_achievement);
 
-
         $master_badge = Badge::factory()->create([
-            'title' => "Master",
+            'title' => 'Master',
             'number' => 10,
         ]);
 
         $user->badges()->attach($master_badge);
 
-        $response = $this->getJson('/users/'. $user->id .'/achievements');
+        $response = $this->getJson('/users/' . $user->id . '/achievements');
 
         $response->assertSee($fifth_lesson_achievement->title);
         $response->assertSee($fifth_comment_achievement->title);
@@ -102,14 +101,14 @@ class AchievementsControllerTest extends TestCase
     public function test_user_has_no_achievements()
     {
         $beginner_badge = Badge::factory()->create([
-            'title' => "Beginner",
+            'title' => 'Beginner',
             'number' => 0,
         ]);
 
         $user = User::factory()->create();
 
         $intermediate_badge = Badge::factory()->create([
-            'title' => "Intermediate",
+            'title' => 'Intermediate',
             'number' => 4,
         ]);
 
@@ -125,7 +124,7 @@ class AchievementsControllerTest extends TestCase
             'type' => Achievement::LESSON,
         ]);
 
-        $response = $this->getJson('/users/'. $user->id .'/achievements');
+        $response = $this->getJson('/users/' . $user->id . '/achievements');
 
         $this->assertEmpty($response->json('unlocked_achievements'));
         $response->assertSee($first_achievement->title);
@@ -137,18 +136,18 @@ class AchievementsControllerTest extends TestCase
     public function test_remaining_to_unlock_next_badge()
     {
         $beginner_badge = Badge::factory()->create([
-            'title' => "Beginner",
+            'title' => 'Beginner',
             'number' => 0,
         ]);
 
         $user = User::factory()->create();
 
         $intermediate_badge = Badge::factory()->create([
-            'title' => "Intermediate",
+            'title' => 'Intermediate',
             'number' => 4,
         ]);
 
-        $response = $this->getJson('/users/'. $user->id .'/achievements');
+        $response = $this->getJson('/users/' . $user->id . '/achievements');
 
         $this->assertEquals(4, $response->json('remaining_to_unlock_next_badge'));
     }

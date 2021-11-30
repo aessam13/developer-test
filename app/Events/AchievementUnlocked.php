@@ -8,9 +8,11 @@ use Illuminate\Queue\SerializesModels;
 
 class AchievementUnlocked
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
     public $achievement_name;
+
     public $user;
 
     /**

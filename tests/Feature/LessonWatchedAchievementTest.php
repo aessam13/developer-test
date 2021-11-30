@@ -3,12 +3,9 @@
 namespace Tests\Feature;
 
 use App\Events\AchievementUnlocked;
-use App\Events\CommentWritten;
 use App\Events\LessonWatched;
-use App\Listeners\CommentWrittenListener;
 use App\Listeners\LessonWatchedListener;
 use App\Models\Achievement;
-use App\Models\Comment;
 use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -19,14 +16,13 @@ class LessonWatchedAchievementTest extends TestCase
 {
     use DatabaseMigrations;
 
-
-    /** @var User $user */
+    /** @var User */
     public $user;
 
-    /** @var Lesson $lesson */
+    /** @var Lesson */
     public $lesson;
 
-    protected function setUp(): void
+    protected function setUp() : void
     {
         parent::setUp();
 
@@ -41,10 +37,12 @@ class LessonWatchedAchievementTest extends TestCase
 
         $this->user->lessons()->attach($this->lesson, ['watched' => false]);
 
-        $this->assertDatabaseMissing('achievement_user',
+        $this->assertDatabaseMissing(
+            'achievement_user',
             [
-                'user_id' => $this->user->id
-            ]);
+                'user_id' => $this->user->id,
+            ]
+        );
 
         Event::assertNotDispatched(AchievementUnlocked::class);
     }
@@ -61,18 +59,19 @@ class LessonWatchedAchievementTest extends TestCase
             'type' => Achievement::LESSON,
         ]);
 
-
         $lesson_watched_event = new LessonWatched($this->lesson, $this->user);
         $lesson_watched_listener = new LessonWatchedListener();
         $lesson_watched_listener->handle($lesson_watched_event);
 
-        $this->assertDatabaseHas('achievement_user',
+        $this->assertDatabaseHas(
+            'achievement_user',
             [
                 'achievement_id' => $first_lesson_achievement->id,
-                'user_id' => $this->user->id
-            ]);
+                'user_id' => $this->user->id,
+            ]
+        );
 
-        Event::assertDispatched(function (AchievementUnlocked $event) use($first_lesson_achievement) {
+        Event::assertDispatched(function (AchievementUnlocked $event) use ($first_lesson_achievement) {
             return $event->user->id == $this->user->id && $event->achievement_name == $first_lesson_achievement->title;
         });
     }
@@ -103,17 +102,21 @@ class LessonWatchedAchievementTest extends TestCase
         $lesson_watched_listener = new LessonWatchedListener();
         $lesson_watched_listener->handle($lesson_watched_event);
 
-        $this->assertDatabaseMissing('achievement_user',
+        $this->assertDatabaseMissing(
+            'achievement_user',
             [
                 'achievement_id' => $first_lesson_achievement->id,
-                'user_id' => $this->user->id
-            ]);
+                'user_id' => $this->user->id,
+            ]
+        );
 
-        $this->assertDatabaseMissing('achievement_user',
+        $this->assertDatabaseMissing(
+            'achievement_user',
             [
                 'achievement_id' => $fifth_lessons_achievement->id,
-                'user_id' => $this->user->id
-            ]);
+                'user_id' => $this->user->id,
+            ]
+        );
 
         Event::assertNotDispatched(AchievementUnlocked::class);
     }
@@ -124,8 +127,7 @@ class LessonWatchedAchievementTest extends TestCase
 
         $lessons = Lesson::factory()->count(5)->create();
 
-        foreach ($lessons as $lesson)
-        {
+        foreach ($lessons as $lesson) {
             $this->user->lessons()->attach($lesson, ['watched' => true]);
         }
 
@@ -146,13 +148,15 @@ class LessonWatchedAchievementTest extends TestCase
         $lesson_watched_listener = new LessonWatchedListener();
         $lesson_watched_listener->handle($lesson_watched_event);
 
-        $this->assertDatabaseHas('achievement_user',
+        $this->assertDatabaseHas(
+            'achievement_user',
             [
                 'achievement_id' => $fifth_lessons_achievement->id,
-                'user_id' => $this->user->id
-            ]);
+                'user_id' => $this->user->id,
+            ]
+        );
 
-        Event::assertDispatched(function (AchievementUnlocked $event) use($fifth_lessons_achievement) {
+        Event::assertDispatched(function (AchievementUnlocked $event) use ($fifth_lessons_achievement) {
             return $event->user->id == $this->user->id && $event->achievement_name == $fifth_lessons_achievement->title;
         });
     }
