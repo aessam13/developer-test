@@ -124,6 +124,6 @@ class User extends Authenticatable
             ->orderBy('number')
             ->first();
 
-        return $next_badge ? $next_badge->number - $badges->last()->number : 0;
+        return $next_badge ? $next_badge->number - $this->achievements()->count() : 0;
     }
 }
