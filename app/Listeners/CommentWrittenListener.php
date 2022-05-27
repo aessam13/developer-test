@@ -25,7 +25,7 @@ class CommentWrittenListener
     public function handle(object $event)
     {
         $comment_user = $event->comment->user;
-        $user_comments_count = $comment_user->comments()->count();
+        $user_comments_count = $comment_user->comments->count();
         $achievements = Achievement::whereType(AchievementTypes::Comment)->get();
 
         $action_listener = new ActionListener();
