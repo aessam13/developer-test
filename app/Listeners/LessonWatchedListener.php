@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Enums\AchievementTypes;
 use App\Models\Achievement;
 
 class LessonWatchedListener
@@ -25,7 +26,7 @@ class LessonWatchedListener
     public function handle($event)
     {
         $user_lessons_watched_count = $event->user->watched()->count();
-        $achievements = Achievement::whereType(Achievement::LESSON)->get();
+        $achievements = Achievement::whereType(AchievementTypes::Lesson)->get();
 
         $action_listener = new ActionListener();
         $action_listener->handle($user_lessons_watched_count, $achievements, $event->user);

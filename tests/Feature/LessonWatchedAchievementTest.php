@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\AchievementTypes;
 use App\Events\AchievementUnlocked;
 use App\Events\LessonWatched;
 use App\Listeners\LessonWatchedListener;
@@ -53,7 +54,7 @@ class LessonWatchedAchievementTest extends TestCase
         $first_lesson_achievement = Achievement::factory()->create([
             'title' => 'First Lesson Watched',
             'number' => 1,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         $lesson_watched_event = new LessonWatched($this->lesson, $this->user);
@@ -85,13 +86,13 @@ class LessonWatchedAchievementTest extends TestCase
         $first_lesson_achievement = Achievement::factory()->create([
             'title' => 'First Lesson Watched',
             'number' => 1,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         $fifth_lessons_achievement = Achievement::factory()->create([
             'title' => '5 Lesson Watched',
             'number' => 5,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         /** @var Lesson $new_lesson */
@@ -131,13 +132,13 @@ class LessonWatchedAchievementTest extends TestCase
         $first_lesson_achievement = Achievement::factory()->create([
             'title' => 'First Lesson Watched',
             'number' => 1,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         $fifth_lessons_achievement = Achievement::factory()->create([
             'title' => '5 Lesson Watched',
             'number' => 5,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         /** @var Lesson $new_lesson */

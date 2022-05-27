@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AchievementTypes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -86,15 +87,15 @@ class User extends Authenticatable
 
     public function next_available_achievements() : Collection
     {
-        $current_comment_achievements = $this->achievements()->whereType(Achievement::COMMENT)->orderByDesc('number')->first();
-        $current_lesson_achievements = $this->achievements()->whereType(Achievement::LESSON)->orderByDesc('number')->first();
+        $current_comment_achievements = $this->achievements()->whereType(AchievementTypes::Comment)->orderByDesc('number')->first();
+        $current_lesson_achievements = $this->achievements()->whereType(AchievementTypes::Lesson)->orderByDesc('number')->first();
 
-        $next_available_comment_achievement = Achievement::whereType(Achievement::COMMENT)
+        $next_available_comment_achievement = Achievement::whereType(AchievementTypes::Comment)
             ->where('number', '>', $current_comment_achievements ? $current_comment_achievements->number : 0)
             ->orderBy('number')
             ->first();
 
-        $next_available_lesson_achievement = Achievement::whereType(Achievement::LESSON)
+        $next_available_lesson_achievement = Achievement::whereType(AchievementTypes::Lesson)
             ->where('number', '>', $current_lesson_achievements ? $current_lesson_achievements->number : 0)
             ->orderBy('number')
             ->first();
@@ -113,7 +114,7 @@ class User extends Authenticatable
             ->orderBy('number')
             ->first();
 
-        return $next_badge ? $next_badge->title : null;
+        return $next_badge?->title;
     }
 
     public function remaining_to_unlock_next_badge() : int

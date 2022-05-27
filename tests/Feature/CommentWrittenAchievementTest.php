@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\AchievementTypes;
 use App\Events\AchievementUnlocked;
 use App\Events\CommentWritten;
 use App\Listeners\CommentWrittenListener;
@@ -47,7 +48,7 @@ class CommentWrittenAchievementTest extends TestCase
         $first_comment_achievement = Achievement::factory()->create([
             'title' => 'First Comment Written',
             'number' => 1,
-            'type' => Achievement::COMMENT,
+            'type' => AchievementTypes::Comment,
         ]);
 
         /** @var Comment $comment */
@@ -84,13 +85,13 @@ class CommentWrittenAchievementTest extends TestCase
         $first_comment_achievement = Achievement::factory()->create([
             'title' => 'First Comment Written',
             'number' => 1,
-            'type' => Achievement::COMMENT,
+            'type' => AchievementTypes::Comment,
         ]);
 
         $third_comments_achievement = Achievement::factory()->create([
             'title' => '3 Comment Written',
             'number' => 3,
-            'type' => Achievement::COMMENT,
+            'type' => AchievementTypes::Comment,
         ]);
 
         /** @var Comment $new_comment */
@@ -133,13 +134,13 @@ class CommentWrittenAchievementTest extends TestCase
         $first_comment_achievement = Achievement::factory()->create([
             'title' => 'First Comment Written',
             'number' => 1,
-            'type' => Achievement::COMMENT,
+            'type' => AchievementTypes::Comment,
         ]);
 
         $third_comments_achievement = Achievement::factory()->create([
             'title' => '3 Comment Written',
             'number' => 3,
-            'type' => Achievement::COMMENT,
+            'type' => AchievementTypes::Comment,
         ]);
 
         /** @var Comment $new_comment */

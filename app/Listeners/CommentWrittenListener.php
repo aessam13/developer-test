@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\AchievementUnlocked;
+use App\Enums\AchievementTypes;
 use App\Models\Achievement;
 
 class CommentWrittenListener
@@ -26,7 +26,7 @@ class CommentWrittenListener
     {
         $comment_user = $event->comment->user;
         $user_comments_count = $comment_user->comments()->count();
-        $achievements = Achievement::whereType(Achievement::COMMENT)->get();
+        $achievements = Achievement::whereType(AchievementTypes::Comment)->get();
 
         $action_listener = new ActionListener();
         $action_listener->handle($user_comments_count, $achievements, $comment_user);

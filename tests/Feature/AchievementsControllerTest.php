@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\AchievementTypes;
 use App\Models\Achievement;
 use App\Models\Badge;
 use App\Models\User;
@@ -16,26 +17,26 @@ class AchievementsControllerTest extends TestCase
         $first_achievement = Achievement::factory()->create([
             'title' => 'First Comment Written',
             'number' => 1,
-            'type' => Achievement::COMMENT,
+            'type' => AchievementTypes::Comment,
         ]);
 
         $second_achievement = Achievement::factory()->create([
             'title' => 'First Lesson Watched',
             'number' => 1,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         //TODO: this is useful after add seeder to DatabaseSeeder ?
         $third_achievement = Achievement::factory()->create([
             'title' => '5 Lesson Watched',
             'number' => 5,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         $fourth_achievement = Achievement::factory()->create([
             'title' => '3 Comment Written',
             'number' => 3,
-            'type' => Achievement::COMMENT,
+            'type' => AchievementTypes::Comment,
         ]);
 
         $user->achievements()->attach($first_achievement);
@@ -68,13 +69,13 @@ class AchievementsControllerTest extends TestCase
         $fifth_comment_achievement = Achievement::factory()->create([
             'title' => 'Fifth Comment Written',
             'number' => 5,
-            'type' => Achievement::COMMENT,
+            'type' => AchievementTypes::Comment,
         ]);
 
         $fifth_lesson_achievement = Achievement::factory()->create([
             'title' => 'Fifth Lesson Watched',
             'number' => 5,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         $user->achievements()->attach($fifth_comment_achievement);
@@ -113,13 +114,13 @@ class AchievementsControllerTest extends TestCase
         $first_achievement = Achievement::factory()->create([
             'title' => 'First Comment Written',
             'number' => 1,
-            'type' => Achievement::COMMENT,
+            'type' => AchievementTypes::Comment,
         ]);
 
         $second_achievement = Achievement::factory()->create([
             'title' => 'First Lesson Watched',
             'number' => 1,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         $response = $this->getJson('/users/' . $user->id . '/achievements');
@@ -167,13 +168,13 @@ class AchievementsControllerTest extends TestCase
         $first_achievement = Achievement::factory()->create([
             'title' => 'First Lesson Watched',
             'number' => 1,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         $second_achievement = Achievement::factory()->create([
             'title' => '5 Lesson Watched',
             'number' => 5,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         $user->achievements()->attach($first_achievement);

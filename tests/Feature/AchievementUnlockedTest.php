@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\AchievementTypes;
 use App\Events\AchievementUnlocked;
 use App\Events\BadgeUnlocked;
 use App\Listeners\AchievementUnlockedListener;
@@ -50,25 +51,25 @@ class AchievementUnlockedTest extends TestCase
         $first_achievement = Achievement::factory()->create([
             'title' => 'First Comment Written',
             'number' => 1,
-            'type' => Achievement::COMMENT,
+            'type' => AchievementTypes::Comment,
         ]);
 
         $second_achievement = Achievement::factory()->create([
             'title' => 'First Lesson Watched',
             'number' => 1,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         $third_achievement = Achievement::factory()->create([
             'title' => '5 Lesson Watched',
             'number' => 5,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         $fourth_achievement = Achievement::factory()->create([
             'title' => '3 Comment Written',
             'number' => 3,
-            'type' => Achievement::COMMENT,
+            'type' => AchievementTypes::Comment,
         ]);
 
         $user->achievements()->attach($first_achievement);
@@ -107,13 +108,13 @@ class AchievementUnlockedTest extends TestCase
         $first_achievement = Achievement::factory()->create([
             'title' => 'First Comment Written',
             'number' => 1,
-            'type' => Achievement::COMMENT,
+            'type' => AchievementTypes::Comment,
         ]);
 
         $second_achievement = Achievement::factory()->create([
             'title' => 'First Lesson Watched',
             'number' => 1,
-            'type' => Achievement::LESSON,
+            'type' => AchievementTypes::Lesson,
         ]);
 
         $user->achievements()->attach($first_achievement);
