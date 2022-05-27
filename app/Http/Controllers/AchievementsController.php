@@ -10,7 +10,7 @@ class AchievementsController extends Controller
     public function index(User $user)
     {
         return response()->json([
-            'unlocked_achievements' => AchievementResource::collection($user->achievements),
+            'unlocked_achievements' => $user->achievements()->pluck('title'),
             'next_available_achievements' => $user->next_available_achievements() ? AchievementResource::collection($user->next_available_achievements()) : null,
             'current_badge' => !$user->badges->isEmpty() ? $user->badges->last()->title : null,
             'next_badge' => $user->next_badge(),
