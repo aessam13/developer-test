@@ -12,7 +12,7 @@ class Badge extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var $fillable array
      */
     protected $fillable = [
         'title',

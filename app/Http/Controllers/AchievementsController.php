@@ -10,7 +10,7 @@ class AchievementsController extends Controller
     {
         return response()->json([
             'unlocked_achievements' => $user->achievements()->pluck('title'),
-            'next_available_achievements' => $user->next_available_achievements() ? $user->next_available_achievements()->pluck('title') : null,
+            'next_available_achievements' => $user->next_available_achievements() != null ? $user->next_available_achievements()->pluck('title') : null,
             'current_badge' => !$user->badges->isEmpty() ? $user->badges->last()->title : null,
             'next_badge' => $user->next_badge(),
             'remaining_to_unlock_next_badge' => $user->remaining_to_unlock_next_badge(),

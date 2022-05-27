@@ -19,7 +19,6 @@ class ActionListener
     /**
      * Handle the event.
      *
-     * @param  object  $event
      * @return void
      */
     public function handle($action_count, $achievements, $user)

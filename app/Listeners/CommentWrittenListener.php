@@ -20,10 +20,9 @@ class CommentWrittenListener
     /**
      * Handle the event.
      *
-     * @param  object  $event
-     * @return AchievementUnlocked
+     * @param object $event
      */
-    public function handle($event)
+    public function handle(object $event)
     {
         $comment_user = $event->comment->user;
         $user_comments_count = $comment_user->comments()->count();
