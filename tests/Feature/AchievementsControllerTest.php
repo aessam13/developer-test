@@ -55,7 +55,6 @@ class AchievementsControllerTest extends TestCase
 
         $response = $this->getJson('/users/' . $user->id . '/achievements');
 
-
         $response->assertSee($first_achievement->title);
         $response->assertSee($second_achievement->title);
 
