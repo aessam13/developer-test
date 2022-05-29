@@ -9,16 +9,17 @@ use App\Listeners\LessonWatchedListener;
 use App\Models\Achievement;
 use App\Models\Lesson;
 use App\Models\User;
+use Database\Seeders\AchievementSeeder;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class LessonWatchedAchievementTest extends TestCase
 {
     /** @var User */
-    public $user;
+    public User $user;
 
     /** @var Lesson */
-    public $lesson;
+    public Lesson $lesson;
 
     protected function setUp() : void
     {
@@ -27,9 +28,11 @@ class LessonWatchedAchievementTest extends TestCase
         $this->user = User::factory()->create();
 
         $this->lesson = Lesson::factory()->create();
+
+        $this->seed(AchievementSeeder::class);
     }
 
-    public function test_user_has_no_lessons_watched()
+    public function test_user_has_lesson_but_did_not_watch_it()
     {
         Event::fake();
 
@@ -45,17 +48,29 @@ class LessonWatchedAchievementTest extends TestCase
         Event::assertNotDispatched(AchievementUnlocked::class);
     }
 
-    public function test_first_comment_achievement()
+    public function test_user_has_no_lessons()
+    {
+        Event::fake();
+
+        $this->assertDatabaseMissing(
+            'achievement_user',
+            [
+                'user_id' => $this->user->id,
+            ]
+        );
+
+        Event::assertNotDispatched(AchievementUnlocked::class);
+    }
+
+    public function test_first_lesson_achievement()
     {
         Event::fake();
 
         $this->user->lessons()->attach($this->lesson, ['watched' => true]);
 
-        $first_lesson_achievement = Achievement::factory()->create([
-            'title' => 'First Lesson Watched',
-            'number' => 1,
-            'type' => AchievementTypes::Lesson,
-        ]);
+        $first_lesson_achievement = Achievement::query()->where('number', 1)
+            ->where('type', AchievementTypes::Lesson)
+            ->first();
 
         $lesson_watched_event = new LessonWatched($this->lesson, $this->user);
         $lesson_watched_listener = new LessonWatchedListener();
@@ -74,7 +89,7 @@ class LessonWatchedAchievementTest extends TestCase
         });
     }
 
-    public function test_user_has_two_comments_so_no_achievement_unlocked()
+    public function test_user_has_two_lessons_so_no_achievement_unlocked()
     {
         Event::fake();
 
@@ -83,24 +98,22 @@ class LessonWatchedAchievementTest extends TestCase
         $this->user->lessons()->attach($this->lesson, ['watched' => true]);
         $this->user->lessons()->attach($new_lesson, ['watched' => true]);
 
-        $first_lesson_achievement = Achievement::factory()->create([
-            'title' => 'First Lesson Watched',
-            'number' => 1,
-            'type' => AchievementTypes::Lesson,
-        ]);
+        $first_lesson_achievement = Achievement::query()->where('number', 1)
+            ->where('type', AchievementTypes::Lesson)
+            ->first();
 
-        $fifth_lessons_achievement = Achievement::factory()->create([
-            'title' => '5 Lesson Watched',
-            'number' => 5,
-            'type' => AchievementTypes::Lesson,
-        ]);
+        $this->user->achievements()->attach($first_lesson_achievement);
+
+        $fifth_lessons_achievement = Achievement::query()->where('number', 5)
+            ->where('type', AchievementTypes::Lesson)
+            ->first();
 
         /** @var Lesson $new_lesson */
         $lesson_watched_event = new LessonWatched($new_lesson, $this->user);
         $lesson_watched_listener = new LessonWatchedListener();
         $lesson_watched_listener->handle($lesson_watched_event);
 
-        $this->assertDatabaseMissing(
+        $this->assertDatabaseHas(
             'achievement_user',
             [
                 'achievement_id' => $first_lesson_achievement->id,
@@ -119,7 +132,7 @@ class LessonWatchedAchievementTest extends TestCase
         Event::assertNotDispatched(AchievementUnlocked::class);
     }
 
-    public function test_fifth_comment_achievement()
+    public function test_fifth_lesson_achievement()
     {
         Event::fake();
 
@@ -129,17 +142,14 @@ class LessonWatchedAchievementTest extends TestCase
             $this->user->lessons()->attach($lesson, ['watched' => true]);
         }
 
-        $first_lesson_achievement = Achievement::factory()->create([
-            'title' => 'First Lesson Watched',
-            'number' => 1,
-            'type' => AchievementTypes::Lesson,
-        ]);
+        $first_lesson_achievement = Achievement::query()->where('number', 1)
+            ->where('type', AchievementTypes::Lesson)
+            ->first();
+        $this->user->achievements()->attach($first_lesson_achievement);
 
-        $fifth_lessons_achievement = Achievement::factory()->create([
-            'title' => '5 Lesson Watched',
-            'number' => 5,
-            'type' => AchievementTypes::Lesson,
-        ]);
+        $fifth_lessons_achievement = Achievement::query()->where('number', 5)
+            ->where('type', AchievementTypes::Lesson)
+            ->first();
 
         /** @var Lesson $new_lesson */
         $lesson_watched_event = new LessonWatched($lessons->last(), $this->user);
@@ -150,6 +160,14 @@ class LessonWatchedAchievementTest extends TestCase
             'achievement_user',
             [
                 'achievement_id' => $fifth_lessons_achievement->id,
+                'user_id' => $this->user->id,
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            'achievement_user',
+            [
+                'achievement_id' => $first_lesson_achievement->id,
                 'user_id' => $this->user->id,
             ]
         );
