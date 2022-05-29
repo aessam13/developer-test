@@ -26,13 +26,11 @@ class AchievementUnlockedListener
     public function handle(object $event)
     {
         $achievement_count = $event->user->achievements->count();
-        $badges = Badge::all();
-
-        foreach ($badges as $badge) {
+        Badge::all()->each(function ($badge) use ($achievement_count, $event) {
             if ($achievement_count == $badge->achievements_number) {
                 $event->user->badges()->attach($badge);
                 BadgeUnlocked::dispatch($badge->title, $event->user);
             }
-        }
+        });
     }
 }
