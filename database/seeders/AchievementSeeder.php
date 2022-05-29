@@ -22,25 +22,25 @@ class AchievementSeeder extends Seeder
         ]);
 
         Achievement::query()->updateOrCreate([
-            'title' => '5 Lesson Watched',
+            'title' => '5 Lessons Watched',
             'action_count' => 5,
             'type' => AchievementTypes::Lesson,
         ]);
 
         Achievement::query()->updateOrCreate([
-            'title' => '10 Lesson Watched',
+            'title' => '10 Lessons Watched',
             'action_count' => 10,
             'type' => AchievementTypes::Lesson,
         ]);
 
         Achievement::query()->updateOrCreate([
-            'title' => '25 Lesson Watched',
+            'title' => '25 Lessons Watched',
             'action_count' => 25,
             'type' => AchievementTypes::Lesson,
         ]);
 
         Achievement::query()->updateOrCreate([
-            'title' => '50 Lesson Watched',
+            'title' => '50 Lessons Watched',
             'action_count' => 50,
             'type' => AchievementTypes::Lesson,
         ]);
