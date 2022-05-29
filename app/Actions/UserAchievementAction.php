@@ -1,28 +1,13 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Actions;
 
 use App\Events\AchievementUnlocked;
 use App\Models\User;
 
-class ActionListener
+class UserAchievementAction
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Handle the event.
-     *
-     * @return void
-     */
-    public function handle(int $action_count, $achievements, User $user)
+    public function __invoke(int $action_count, $achievements, User $user)
     {
         foreach ($achievements as $achievement) {
             if ($action_count == $achievement->action_count) {
