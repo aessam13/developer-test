@@ -1,8 +1,6 @@
 # iPhone Photography School developer test
 
-1. Create your .env file as the env example
-2. Run `composer install`
-3. Run `php artisan migrate`
+Please run `composer install`
 
 --------
 
