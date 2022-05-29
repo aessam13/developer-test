@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Badge;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class BadgeSeeder extends Seeder
 {
@@ -14,22 +14,22 @@ class BadgeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('badges')->insert([
+        Badge::query()->updateOrCreate([
             'title' => 'Beginner',
             'number' => 0,
         ]);
 
-        DB::table('badges')->insert([
+        Badge::query()->updateOrCreate([
             'title' => 'Intermediate',
             'number' => 4,
         ]);
 
-        DB::table('badges')->insert([
+        Badge::query()->updateOrCreate([
             'title' => 'Advanced',
             'number' => 8,
         ]);
 
-        DB::table('badges')->insert([
+        Badge::query()->updateOrCreate([
             'title' => 'Master',
             'number' => 10,
         ]);
