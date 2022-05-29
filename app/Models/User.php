@@ -100,7 +100,7 @@ class User extends Authenticatable
             ->orderBy('action_count')
             ->first();
 
-        return collect(array_filter([
+        return collect(array_filter([ //to solve the 2 value equals to null
             $next_available_comment_achievement,
             $next_available_lesson_achievement,
         ]));
