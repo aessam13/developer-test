@@ -40,8 +40,6 @@ class AchievementUnlockedTest extends TestCase
 
     public function test_intermediate_badge_for_a_user()
     {
-        Event::fake();
-
         /* @var User $user*/
         $user = User::factory()->create();
 
@@ -68,10 +66,7 @@ class AchievementUnlockedTest extends TestCase
         $user->achievements()->attach($third_achievement);
         $user->achievements()->attach($fourth_achievement);
 
-        $achievement_event = new AchievementUnlocked($fourth_achievement->title, $user);
-
-        $achievement_unlocked_listener = new AchievementUnlockedListener();
-        $achievement_unlocked_listener->handle($achievement_event);
+        AchievementUnlocked::dispatch($fourth_achievement->title, $user);
 
         $this->assertDatabaseHas(
             'badge_user',
@@ -80,10 +75,6 @@ class AchievementUnlockedTest extends TestCase
                 'badge_id' => $intermediate_badge->id,
             ]
         );
-
-        Event::assertDispatched(function (BadgeUnlocked $event) use ($user, $intermediate_badge) {
-            return $event->user->id == $user->id && $event->badge_name == $intermediate_badge->title;
-        });
     }
 
     public function test_user_has_only_two_achievements()
@@ -105,10 +96,8 @@ class AchievementUnlockedTest extends TestCase
         $user->achievements()->attach($first_achievement);
         $user->achievements()->attach($second_achievement);
 
-        $achievement_event = new AchievementUnlocked($second_achievement->title, $user);
+        AchievementUnlocked::dispatch($second_achievement->title, $user);
 
-        $achievement_unlocked_listener = new AchievementUnlockedListener();
-        $achievement_unlocked_listener->handle($achievement_event);
 
         $this->assertDatabaseHas(
             'badge_user',

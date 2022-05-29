@@ -27,22 +27,18 @@ class CommentWrittenAchievementTest extends TestCase
 
     public function test_user_has_no_comments()
     {
-        Event::fake();
-
+        $comment = Comment::factory()->create();
+        CommentWritten::dispatch($comment);
         $this->assertDatabaseMissing(
             'achievement_user',
             [
                 'user_id' => $this->user->id,
             ]
         );
-
-        Event::assertNotDispatched(AchievementUnlocked::class);
     }
 
     public function test_first_comment_achievement()
     {
-        Event::fake();
-
         $comment = Comment::factory()->create([
             'user_id' => $this->user->id,
         ]);
@@ -52,9 +48,7 @@ class CommentWrittenAchievementTest extends TestCase
             ->first();
 
         /** @var Comment $comment */
-        $comment_written_event = new CommentWritten($comment);
-        $comment_written_listener = new CommentWrittenListener();
-        $comment_written_listener->handle($comment_written_event);
+        CommentWritten::dispatch($comment);
 
         $this->assertDatabaseHas(
             'achievement_user',
@@ -63,16 +57,10 @@ class CommentWrittenAchievementTest extends TestCase
                 'user_id' => $this->user->id,
             ]
         );
-
-        Event::assertDispatched(function (AchievementUnlocked $event) use ($first_comment_achievement) {
-            return $event->user->id == $this->user->id && $event->achievement_name == $first_comment_achievement->title;
-        });
     }
 
     public function test_user_has_two_comments_so_first_comment_achievement_only_unlocked()
     {
-        Event::fake();
-
         Comment::factory()->create([
             'user_id' => $this->user->id,
         ]);
@@ -89,9 +77,7 @@ class CommentWrittenAchievementTest extends TestCase
             ->first();
 
         /** @var Comment $new_comment */
-        $comment_written_event = new CommentWritten($new_comment);
-        $comment_written_listener = new CommentWrittenListener();
-        $comment_written_listener->handle($comment_written_event);
+        CommentWritten::dispatch($new_comment);
 
         $this->assertDatabaseHas(
             'achievement_user',
@@ -108,14 +94,10 @@ class CommentWrittenAchievementTest extends TestCase
                 'user_id' => $this->user->id,
             ]
         );
-
-        Event::assertNotDispatched(AchievementUnlocked::class);
     }
 
     public function test_user_has_no_achievements()
     {
-        Event::fake();
-
         $first_comment_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Comment)
             ->first();
@@ -127,14 +109,10 @@ class CommentWrittenAchievementTest extends TestCase
                 'user_id' => $this->user->id,
             ]
         );
-
-        Event::assertNotDispatched(AchievementUnlocked::class);
     }
 
     public function test_third_comment_achievement()
     {
-        Event::fake();
-
         Comment::factory()->count(2)->create([
             'user_id' => $this->user->id,
         ]);
@@ -151,9 +129,7 @@ class CommentWrittenAchievementTest extends TestCase
             ->first();
 
         /** @var Comment $new_comment */
-        $comment_written_event = new CommentWritten($new_comment);
-        $comment_written_listener = new CommentWrittenListener();
-        $comment_written_listener->handle($comment_written_event);
+        CommentWritten::dispatch($new_comment);
 
         $this->assertDatabaseHas(
             'achievement_user',
@@ -170,9 +146,5 @@ class CommentWrittenAchievementTest extends TestCase
                 'user_id' => $this->user->id,
             ]
         );
-
-        Event::assertDispatched(function (AchievementUnlocked $event) use ($third_comments_achievement) {
-            return $event->user->id == $this->user->id && $event->achievement_name == $third_comments_achievement->title;
-        });
     }
 }
