@@ -24,7 +24,7 @@ class ActionListener
     public function handle($action_count, $achievements, $user)
     {
         foreach ($achievements as $achievement) {
-            if ($action_count == $achievement->number) {
+            if ($action_count == $achievement->action_count) {
                 $user->achievements()->attach($achievement);
                 AchievementUnlocked::dispatch($achievement->title, $user);
             }

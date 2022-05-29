@@ -16,7 +16,7 @@ class UserObserver
      */
     public function created(User $user)
     {
-        $badge = Badge::whereNumber(0)->first();
+        $badge = Badge::query()->where('achievements_number',0)->first();
         if (! $badge) {
             return;
         }

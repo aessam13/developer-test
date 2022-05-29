@@ -17,61 +17,61 @@ class AchievementSeeder extends Seeder
     {
         Achievement::query()->updateOrCreate([
             'title' => 'First Lesson Watched',
-            'number' => 1,
+            'action_count' => 1,
             'type' => AchievementTypes::Lesson,
         ]);
 
         Achievement::query()->updateOrCreate([
             'title' => '5 Lesson Watched',
-            'number' => 5,
+            'action_count' => 5,
             'type' => AchievementTypes::Lesson,
         ]);
 
         Achievement::query()->updateOrCreate([
             'title' => '10 Lesson Watched',
-            'number' => 10,
+            'action_count' => 10,
             'type' => AchievementTypes::Lesson,
         ]);
 
         Achievement::query()->updateOrCreate([
             'title' => '25 Lesson Watched',
-            'number' => 25,
+            'action_count' => 25,
             'type' => AchievementTypes::Lesson,
         ]);
 
         Achievement::query()->updateOrCreate([
             'title' => '50 Lesson Watched',
-            'number' => 50,
+            'action_count' => 50,
             'type' => AchievementTypes::Lesson,
         ]);
 
         Achievement::query()->updateOrCreate([
             'title' => 'First Comment Written',
-            'number' => 1,
+            'action_count' => 1,
             'type' => AchievementTypes::Comment,
         ]);
 
         Achievement::query()->updateOrCreate([
             'title' => '3 Comments Written',
-            'number' => 3,
+            'action_count' => 3,
             'type' => AchievementTypes::Comment,
         ]);
 
         Achievement::query()->updateOrCreate([
             'title' => '5 Comments Written',
-            'number' => 5,
+            'action_count' => 5,
             'type' => AchievementTypes::Comment,
         ]);
 
         Achievement::query()->updateOrCreate([
             'title' => '10 Comments Written',
-            'number' => 10,
+            'action_count' => 10,
             'type' => AchievementTypes::Comment,
         ]);
 
         Achievement::query()->updateOrCreate([
             'title' => '20 Comments Written',
-            'number' => 20,
+            'action_count' => 20,
             'type' => AchievementTypes::Comment,
         ]);
     }

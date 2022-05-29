@@ -16,22 +16,22 @@ class BadgeSeeder extends Seeder
     {
         Badge::query()->updateOrCreate([
             'title' => 'Beginner',
-            'number' => 0,
+            'achievements_number' => 0,
         ]);
 
         Badge::query()->updateOrCreate([
             'title' => 'Intermediate',
-            'number' => 4,
+            'achievements_number' => 4,
         ]);
 
         Badge::query()->updateOrCreate([
             'title' => 'Advanced',
-            'number' => 8,
+            'achievements_number' => 8,
         ]);
 
         Badge::query()->updateOrCreate([
             'title' => 'Master',
-            'number' => 10,
+            'achievements_number' => 10,
         ]);
     }
 }

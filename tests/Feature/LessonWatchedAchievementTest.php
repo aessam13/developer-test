@@ -68,7 +68,7 @@ class LessonWatchedAchievementTest extends TestCase
 
         $this->user->lessons()->attach($this->lesson, ['watched' => true]);
 
-        $first_lesson_achievement = Achievement::query()->where('number', 1)
+        $first_lesson_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Lesson)
             ->first();
 
@@ -98,13 +98,13 @@ class LessonWatchedAchievementTest extends TestCase
         $this->user->lessons()->attach($this->lesson, ['watched' => true]);
         $this->user->lessons()->attach($new_lesson, ['watched' => true]);
 
-        $first_lesson_achievement = Achievement::query()->where('number', 1)
+        $first_lesson_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Lesson)
             ->first();
 
         $this->user->achievements()->attach($first_lesson_achievement);
 
-        $fifth_lessons_achievement = Achievement::query()->where('number', 5)
+        $fifth_lessons_achievement = Achievement::query()->where('action_count', 5)
             ->where('type', AchievementTypes::Lesson)
             ->first();
 
@@ -142,12 +142,12 @@ class LessonWatchedAchievementTest extends TestCase
             $this->user->lessons()->attach($lesson, ['watched' => true]);
         }
 
-        $first_lesson_achievement = Achievement::query()->where('number', 1)
+        $first_lesson_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Lesson)
             ->first();
         $this->user->achievements()->attach($first_lesson_achievement);
 
-        $fifth_lessons_achievement = Achievement::query()->where('number', 5)
+        $fifth_lessons_achievement = Achievement::query()->where('action_count', 5)
             ->where('type', AchievementTypes::Lesson)
             ->first();
 

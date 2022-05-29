@@ -29,7 +29,7 @@ class AchievementUnlockedListener
         $badges = Badge::all();
 
         foreach ($badges as $badge) {
-            if ($achievement_count == $badge->number) {
+            if ($achievement_count == $badge->achievements_number) {
                 $event->user->badges()->attach($badge);
                 BadgeUnlocked::dispatch($badge->title, $event->user);
             }

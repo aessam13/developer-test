@@ -47,7 +47,7 @@ class CommentWrittenAchievementTest extends TestCase
             'user_id' => $this->user->id,
         ]);
 
-        $first_comment_achievement = Achievement::query()->where('number', 1)
+        $first_comment_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Comment)
             ->first();
 
@@ -76,7 +76,7 @@ class CommentWrittenAchievementTest extends TestCase
         Comment::factory()->create([
             'user_id' => $this->user->id,
         ]);
-        $first_comment_achievement = Achievement::query()->where('number', 1)
+        $first_comment_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Comment)
             ->first();
         $this->user->achievements()->attach($first_comment_achievement);
@@ -84,7 +84,7 @@ class CommentWrittenAchievementTest extends TestCase
         $new_comment = Comment::factory()->create([
             'user_id' => $this->user->id,
         ]);
-        $third_comments_achievement = Achievement::query()->where('number', 3)
+        $third_comments_achievement = Achievement::query()->where('action_count', 3)
             ->where('type', AchievementTypes::Comment)
             ->first();
 
@@ -116,7 +116,7 @@ class CommentWrittenAchievementTest extends TestCase
     {
         Event::fake();
 
-        $first_comment_achievement = Achievement::query()->where('number', 1)
+        $first_comment_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Comment)
             ->first();
 
@@ -138,7 +138,7 @@ class CommentWrittenAchievementTest extends TestCase
         Comment::factory()->count(2)->create([
             'user_id' => $this->user->id,
         ]);
-        $first_comment_achievement = Achievement::query()->where('number', 1)
+        $first_comment_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Comment)
             ->first();
         $this->user->achievements()->attach($first_comment_achievement);
@@ -146,7 +146,7 @@ class CommentWrittenAchievementTest extends TestCase
         $new_comment = Comment::factory()->create([
             'user_id' => $this->user->id,
         ]);
-        $third_comments_achievement = Achievement::query()->where('number', 3)
+        $third_comments_achievement = Achievement::query()->where('action_count', 3)
             ->where('type', AchievementTypes::Comment)
             ->first();
 

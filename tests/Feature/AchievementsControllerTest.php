@@ -24,18 +24,18 @@ class AchievementsControllerTest extends TestCase
         /* @var User $user*/
         $user = User::factory()->create();
 
-        $first_achievement = Achievement::query()->where('number', 1)
+        $first_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Comment)
             ->first();
 
-        $second_achievement = Achievement::query()->where('number', 1)
+        $second_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Lesson)
             ->first();
 
         $user->achievements()->attach($first_achievement);
         $user->achievements()->attach($second_achievement);
 
-        $intermediate_badge = Badge::query()->where('number', 4)->first();
+        $intermediate_badge = Badge::query()->where('achievements_number', 4)->first();
 
         $response = $this->getJson('/users/' . $user->id . '/achievements');
 
@@ -49,18 +49,18 @@ class AchievementsControllerTest extends TestCase
         /* @var User $user*/
         $user = User::factory()->create();
 
-        $last_comment_achievement = Achievement::query()->where('number', 20)
+        $last_comment_achievement = Achievement::query()->where('action_count', 20)
             ->where('type', AchievementTypes::Comment)
             ->first();
 
-        $last_lesson_achievement = Achievement::query()->where('number', 50)
+        $last_lesson_achievement = Achievement::query()->where('action_count', 50)
             ->where('type', AchievementTypes::Lesson)
             ->first();
 
         $user->achievements()->attach($last_comment_achievement);
         $user->achievements()->attach($last_lesson_achievement);
 
-        $master_badge = Badge::query()->where('number', 10)->first();
+        $master_badge = Badge::query()->where('achievements_number', 10)->first();
 
         $user->badges()->attach($master_badge);
 
@@ -79,13 +79,13 @@ class AchievementsControllerTest extends TestCase
         /* @var User $user*/
         $user = User::factory()->create();
 
-        $intermediate_badge = Badge::query()->where('number', 4)->first();
+        $intermediate_badge = Badge::query()->where('achievements_number', 4)->first();
 
-        $first_achievement = Achievement::query()->where('number', 1)
+        $first_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Comment)
             ->first();
 
-        $second_achievement = Achievement::query()->where('number', 1)
+        $second_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Lesson)
             ->first();
 
@@ -113,7 +113,7 @@ class AchievementsControllerTest extends TestCase
         /* @var User $user*/
         $user = User::factory()->create();
 
-        $first_achievement = Achievement::query()->where('number', 1)
+        $first_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Lesson)
             ->first();
         $user->achievements()->attach($first_achievement);

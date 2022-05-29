@@ -25,7 +25,7 @@ class AchievementUnlockedTest extends TestCase
 
     public function test_beginner_badge_for_a_user()
     {
-        $beginner_badge = Badge::query()->where('number', 0)->first();
+        $beginner_badge = Badge::query()->where('achievements_number', 0)->first();
 
         $user = User::factory()->create();
 
@@ -45,21 +45,21 @@ class AchievementUnlockedTest extends TestCase
         /* @var User $user*/
         $user = User::factory()->create();
 
-        $intermediate_badge = Badge::query()->where('number', 4)->first();
+        $intermediate_badge = Badge::query()->where('achievements_number', 4)->first();
 
-        $first_achievement = Achievement::query()->where('number', 1)
+        $first_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Comment)
             ->first();
 
-        $second_achievement = Achievement::query()->where('number', 1)
+        $second_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Lesson)
             ->first();
 
-        $third_achievement = Achievement::query()->where('number', 5)
+        $third_achievement = Achievement::query()->where('action_count', 5)
             ->where('type', AchievementTypes::Lesson)
             ->first();
 
-        $fourth_achievement = Achievement::query()->where('number', 3)
+        $fourth_achievement = Achievement::query()->where('action_count', 3)
             ->where('type', AchievementTypes::Comment)
             ->first();
 
@@ -88,17 +88,17 @@ class AchievementUnlockedTest extends TestCase
 
     public function test_user_has_only_two_achievements()
     {
-        $beginner_badge = Badge::query()->where('number', 0)->first();
+        $beginner_badge = Badge::query()->where('achievements_number', 0)->first();
 
 
         /* @var User $user*/
         $user = User::factory()->create();
 
-        $first_achievement = Achievement::query()->where('number', 1)
+        $first_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Comment)
             ->first();
 
-        $second_achievement = Achievement::query()->where('number', 1)
+        $second_achievement = Achievement::query()->where('action_count', 1)
             ->where('type', AchievementTypes::Lesson)
             ->first();
 

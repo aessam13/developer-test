@@ -21,11 +21,10 @@ class UserTest extends TestCase
     {
         /* @var User $user*/
         $user = User::factory()->create();
-        $beginner_badge = Badge::query()->where('number', 0)->first();
+        $beginner_badge = Badge::query()->where('achievements_number', 0)->first();
 
         $response = $this->getJson('/users/' . $user->id . '/achievements');
         $this->assertEquals($beginner_badge->title, $response->json('current_badge'));
-
     }
 
     public function test_user_created_when_use_factory()

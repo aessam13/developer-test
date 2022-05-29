@@ -87,17 +87,17 @@ class User extends Authenticatable
 
     public function next_available_achievements() : Collection
     {
-        $current_comment_achievements = $this->achievements()->whereType(AchievementTypes::Comment)->orderByDesc('number')->first();
-        $current_lesson_achievements = $this->achievements()->whereType(AchievementTypes::Lesson)->orderByDesc('number')->first();
+        $current_comment_achievements = $this->achievements()->whereType(AchievementTypes::Comment)->orderByDesc('action_count')->first();
+        $current_lesson_achievements = $this->achievements()->whereType(AchievementTypes::Lesson)->orderByDesc('action_count')->first();
 
         $next_available_comment_achievement = Achievement::whereType(AchievementTypes::Comment)
-            ->where('number', '>', $current_comment_achievements ? $current_comment_achievements->number : 0)
-            ->orderBy('number')
+            ->where('action_count', '>', $current_comment_achievements ? $current_comment_achievements->action_count : 0)
+            ->orderBy('action_count')
             ->first();
 
         $next_available_lesson_achievement = Achievement::whereType(AchievementTypes::Lesson)
-            ->where('number', '>', $current_lesson_achievements ? $current_lesson_achievements->number : 0)
-            ->orderBy('number')
+            ->where('action_count', '>', $current_lesson_achievements ? $current_lesson_achievements->action_count : 0)
+            ->orderBy('action_count')
             ->first();
 
         return collect(array_filter([
@@ -108,10 +108,10 @@ class User extends Authenticatable
 
     public function next_badge()
     {
-        $current_badge = $this->badges()->orderBy('number')->get();
+        $current_badge = $this->badges()->orderBy('achievements_number')->get();
 
-        $next_badge = Badge::where('number', '>', $current_badge->last()->number)
-            ->orderBy('number')
+        $next_badge = Badge::where('achievements_number', '>', $current_badge->last()->achievements_number)
+            ->orderBy('achievements_number')
             ->first();
 
         return $next_badge?->title;
@@ -119,12 +119,12 @@ class User extends Authenticatable
 
     public function remaining_to_unlock_next_badge() : int
     {
-        $badges = $this->badges()->orderBy('number')->get();
+        $badges = $this->badges()->orderBy('achievements_number')->get();
 
-        $next_badge = Badge::where('number', '>', $badges->last()->number)
-            ->orderBy('number')
+        $next_badge = Badge::where('achievements_number', '>', $badges->last()->achievements_number)
+            ->orderBy('achievements_number')
             ->first();
 
-        return $next_badge ? $next_badge->number - $this->achievements()->count() : 0;
+        return $next_badge ? $next_badge->achievements_number - $this->achievements()->count() : 0;
     }
 }
