@@ -27,7 +27,7 @@ class CommentWrittenListener
     {
         $comment_user = $event->comment->user;
         $user_comments_count = $comment_user->comments->count();
-        $achievements = Achievement::query()->where('type',AchievementTypes::Comment)->get();
+        $achievements = Achievement::query()->where('type', AchievementTypes::Comment)->get();
 
         app()->make(UserAchievementAction::class)($user_comments_count, $achievements, $comment_user);
     }
