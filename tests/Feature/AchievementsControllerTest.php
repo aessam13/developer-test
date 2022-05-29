@@ -95,6 +95,7 @@ class AchievementsControllerTest extends TestCase
         $this->assertEquals($first_achievement->title, $response->json('next_available_achievements')[0]);
         $this->assertEquals($second_achievement->title, $response->json('next_available_achievements')[1]);
         $this->assertEquals($intermediate_badge->title, $response->json('next_badge'));
+        $this->assertEquals(4, $response->json('remaining_to_unlock_next_badge'));
     }
 
     public function test_remaining_to_unlock_next_badge()
