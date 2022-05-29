@@ -9,6 +9,8 @@ use App\Listeners\AchievementUnlockedListener;
 use App\Models\Achievement;
 use App\Models\Badge;
 use App\Models\User;
+use Database\Seeders\AchievementSeeder;
+use Database\Seeders\BadgeSeeder;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
@@ -17,14 +19,13 @@ class AchievementUnlockedTest extends TestCase
     protected function setUp() : void
     {
         parent::setUp();
+        $this->seed(AchievementSeeder::class);
+        $this->seed(BadgeSeeder::class);
     }
 
     public function test_beginner_badge_for_a_user()
     {
-        $beginner_badge = Badge::factory()->create([
-            'title' => 'Beginner',
-            'number' => 0,
-        ]);
+        $beginner_badge = Badge::query()->where('number', 0)->first();
 
         $user = User::factory()->create();
 
@@ -41,36 +42,26 @@ class AchievementUnlockedTest extends TestCase
     {
         Event::fake();
 
+        /* @var User $user*/
         $user = User::factory()->create();
 
-        $intermediate_badge = Badge::factory()->create([
-            'title' => 'Intermediate',
-            'number' => 4,
-        ]);
+        $intermediate_badge = Badge::query()->where('number', 4)->first();
 
-        $first_achievement = Achievement::factory()->create([
-            'title' => 'First Comment Written',
-            'number' => 1,
-            'type' => AchievementTypes::Comment,
-        ]);
+        $first_achievement = Achievement::query()->where('number', 1)
+            ->where('type', AchievementTypes::Comment)
+            ->first();
 
-        $second_achievement = Achievement::factory()->create([
-            'title' => 'First Lesson Watched',
-            'number' => 1,
-            'type' => AchievementTypes::Lesson,
-        ]);
+        $second_achievement = Achievement::query()->where('number', 1)
+            ->where('type', AchievementTypes::Lesson)
+            ->first();
 
-        $third_achievement = Achievement::factory()->create([
-            'title' => '5 Lesson Watched',
-            'number' => 5,
-            'type' => AchievementTypes::Lesson,
-        ]);
+        $third_achievement = Achievement::query()->where('number', 5)
+            ->where('type', AchievementTypes::Lesson)
+            ->first();
 
-        $fourth_achievement = Achievement::factory()->create([
-            'title' => '3 Comment Written',
-            'number' => 3,
-            'type' => AchievementTypes::Comment,
-        ]);
+        $fourth_achievement = Achievement::query()->where('number', 3)
+            ->where('type', AchievementTypes::Comment)
+            ->first();
 
         $user->achievements()->attach($first_achievement);
         $user->achievements()->attach($second_achievement);
@@ -97,25 +88,19 @@ class AchievementUnlockedTest extends TestCase
 
     public function test_user_has_only_two_achievements()
     {
-        $beginner_badge = Badge::factory()->create([
-            'title' => 'Beginner',
-            'number' => 0,
-        ]);
+        $beginner_badge = Badge::query()->where('number', 0)->first();
+
 
         /* @var User $user*/
         $user = User::factory()->create();
 
-        $first_achievement = Achievement::factory()->create([
-            'title' => 'First Comment Written',
-            'number' => 1,
-            'type' => AchievementTypes::Comment,
-        ]);
+        $first_achievement = Achievement::query()->where('number', 1)
+            ->where('type', AchievementTypes::Comment)
+            ->first();
 
-        $second_achievement = Achievement::factory()->create([
-            'title' => 'First Lesson Watched',
-            'number' => 1,
-            'type' => AchievementTypes::Lesson,
-        ]);
+        $second_achievement = Achievement::query()->where('number', 1)
+            ->where('type', AchievementTypes::Lesson)
+            ->first();
 
         $user->achievements()->attach($first_achievement);
         $user->achievements()->attach($second_achievement);
