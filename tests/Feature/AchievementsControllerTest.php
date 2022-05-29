@@ -21,6 +21,7 @@ class AchievementsControllerTest extends TestCase
 
     public function test_user_achievements()
     {
+        /* @var User $user*/
         $user = User::factory()->create();
 
         $first_achievement = Achievement::query()->where('number', 1)
@@ -45,6 +46,7 @@ class AchievementsControllerTest extends TestCase
 
     public function test_user_has_the_last_badge()
     {
+        /* @var User $user*/
         $user = User::factory()->create();
 
         $last_comment_achievement = Achievement::query()->where('number', 20)
@@ -74,6 +76,7 @@ class AchievementsControllerTest extends TestCase
 
     public function test_user_has_no_achievements()
     {
+        /* @var User $user*/
         $user = User::factory()->create();
 
         $intermediate_badge = Badge::query()->where('number', 4)->first();
@@ -96,6 +99,7 @@ class AchievementsControllerTest extends TestCase
 
     public function test_remaining_to_unlock_next_badge()
     {
+        /* @var User $user*/
         $user = User::factory()->create();
 
         $response = $this->getJson('/users/' . $user->id . '/achievements');
@@ -105,6 +109,7 @@ class AchievementsControllerTest extends TestCase
 
     public function test_remaining_to_unlock_next_badge_if_user_watch_only_one_lesson()
     {
+        /* @var User $user*/
         $user = User::factory()->create();
 
         $first_achievement = Achievement::query()->where('number', 1)
