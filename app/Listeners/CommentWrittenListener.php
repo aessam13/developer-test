@@ -22,6 +22,7 @@ class CommentWrittenListener
      * Handle the event.
      *
      * @param object $event
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function handle(object $event)
     {
