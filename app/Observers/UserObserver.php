@@ -17,8 +17,9 @@ class UserObserver
     public function created(User $user)
     {
         $badge = Badge::whereNumber(0)->first();
-        if ($badge) {
-            $user->badges()->attach($badge);
+        if (! $badge) {
+            return;
         }
+        $user->badges()->attach($badge);
     }
 }
