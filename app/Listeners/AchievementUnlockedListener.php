@@ -23,7 +23,7 @@ class AchievementUnlockedListener
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(object $event)
     {
         $achievement_count = $event->user->achievements->count();
         $badges = Badge::all();

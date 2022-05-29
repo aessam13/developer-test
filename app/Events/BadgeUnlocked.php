@@ -13,9 +13,9 @@ class BadgeUnlocked
     use InteractsWithSockets;
     use SerializesModels;
 
-    public $badge_name;
+    public string $badge_name;
 
-    public $user;
+    public User $user;
 
     /**
      * Create a new event instance.

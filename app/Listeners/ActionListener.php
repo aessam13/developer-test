@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\AchievementUnlocked;
+use App\Models\User;
 
 class ActionListener
 {
@@ -21,7 +22,7 @@ class ActionListener
      *
      * @return void
      */
-    public function handle($action_count, $achievements, $user)
+    public function handle(int $action_count, $achievements, User $user)
     {
         foreach ($achievements as $achievement) {
             if ($action_count == $achievement->action_count) {

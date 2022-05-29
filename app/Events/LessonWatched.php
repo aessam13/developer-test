@@ -12,9 +12,9 @@ class LessonWatched
     use Dispatchable;
     use SerializesModels;
 
-    public $lesson;
+    public Lesson $lesson;
 
-    public $user;
+    public User $user;
 
     /**
      * Create a new event instance.

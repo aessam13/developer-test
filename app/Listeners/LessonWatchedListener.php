@@ -23,7 +23,7 @@ class LessonWatchedListener
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(object $event)
     {
         $user_lessons_watched_count = $event->user->watched->count();
         $achievements = Achievement::whereType(AchievementTypes::Lesson)->get();
