@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Models\Badge;
 use App\Models\User;
 
@@ -16,8 +15,8 @@ class UserObserver
      */
     public function created(User $user)
     {
-        $badge = Badge::query()->where('achievements_number',0)->first();
-        if (! $badge) {
+        $badge = Badge::query()->where('achievements_number', 0)->first();
+        if (!$badge) {
             return;
         }
         $user->badges()->attach($badge);

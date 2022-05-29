@@ -23,7 +23,7 @@ class Comment extends Model
     /**
      * Get the user that wrote the comment.
      */
-    public function user(): BelongsTo
+    public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }

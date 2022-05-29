@@ -3,14 +3,11 @@
 namespace Tests\Feature;
 
 use App\Enums\AchievementTypes;
-use App\Events\AchievementUnlocked;
 use App\Events\CommentWritten;
-use App\Listeners\CommentWrittenListener;
 use App\Models\Achievement;
 use App\Models\Comment;
 use App\Models\User;
 use Database\Seeders\AchievementSeeder;
-use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class CommentWrittenAchievementTest extends TestCase
@@ -47,7 +44,7 @@ class CommentWrittenAchievementTest extends TestCase
             ->where('type', AchievementTypes::Comment)
             ->first();
 
-        /** @var Comment $comment */
+        /* @var Comment $comment */
         CommentWritten::dispatch($comment);
 
         $this->assertDatabaseHas(
@@ -76,7 +73,7 @@ class CommentWrittenAchievementTest extends TestCase
             ->where('type', AchievementTypes::Comment)
             ->first();
 
-        /** @var Comment $new_comment */
+        /* @var Comment $new_comment */
         CommentWritten::dispatch($new_comment);
 
         $this->assertDatabaseHas(
@@ -128,7 +125,7 @@ class CommentWrittenAchievementTest extends TestCase
             ->where('type', AchievementTypes::Comment)
             ->first();
 
-        /** @var Comment $new_comment */
+        /* @var Comment $new_comment */
         CommentWritten::dispatch($new_comment);
 
         $this->assertDatabaseHas(

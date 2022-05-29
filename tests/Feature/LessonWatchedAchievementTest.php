@@ -3,14 +3,11 @@
 namespace Tests\Feature;
 
 use App\Enums\AchievementTypes;
-use App\Events\AchievementUnlocked;
 use App\Events\LessonWatched;
-use App\Listeners\LessonWatchedListener;
 use App\Models\Achievement;
 use App\Models\Lesson;
 use App\Models\User;
 use Database\Seeders\AchievementSeeder;
-use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class LessonWatchedAchievementTest extends TestCase
@@ -94,7 +91,7 @@ class LessonWatchedAchievementTest extends TestCase
             ->where('type', AchievementTypes::Lesson)
             ->first();
 
-        /** @var Lesson $new_lesson */
+        /* @var Lesson $new_lesson */
         LessonWatched::dispatch($new_lesson, $this->user);
 
         $this->assertDatabaseHas(
@@ -131,7 +128,7 @@ class LessonWatchedAchievementTest extends TestCase
             ->where('type', AchievementTypes::Lesson)
             ->first();
 
-        /** @var Lesson $new_lesson */
+        /* @var Lesson $new_lesson */
         LessonWatched::dispatch($lessons->last(), $this->user);
 
         $this->assertDatabaseHas(

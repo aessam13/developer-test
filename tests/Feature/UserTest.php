@@ -5,13 +5,11 @@ namespace Tests\Feature;
 use App\Models\Badge;
 use App\Models\User;
 use Database\Seeders\BadgeSeeder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    protected function setUp(): void
+    protected function setUp() : void
     {
         parent::setUp();
         $this->seed(BadgeSeeder::class);

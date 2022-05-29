@@ -4,14 +4,11 @@ namespace Tests\Feature;
 
 use App\Enums\AchievementTypes;
 use App\Events\AchievementUnlocked;
-use App\Events\BadgeUnlocked;
-use App\Listeners\AchievementUnlockedListener;
 use App\Models\Achievement;
 use App\Models\Badge;
 use App\Models\User;
 use Database\Seeders\AchievementSeeder;
 use Database\Seeders\BadgeSeeder;
-use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class AchievementUnlockedTest extends TestCase
@@ -81,7 +78,6 @@ class AchievementUnlockedTest extends TestCase
     {
         $beginner_badge = Badge::query()->where('achievements_number', 0)->first();
 
-
         /* @var User $user*/
         $user = User::factory()->create();
 
@@ -97,7 +93,6 @@ class AchievementUnlockedTest extends TestCase
         $user->achievements()->attach($second_achievement);
 
         AchievementUnlocked::dispatch($second_achievement->title, $user);
-
 
         $this->assertDatabaseHas(
             'badge_user',
