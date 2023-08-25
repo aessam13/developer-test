@@ -25,7 +25,7 @@ class LessonWatchedListener
      * @return void
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function handle(object $event)
+    public function handle(object $event): void
     {
         $user_lessons_watched_count = $event->user->watched->count();
         $achievements = Achievement::query()->where('type', AchievementTypes::Lesson)->get();

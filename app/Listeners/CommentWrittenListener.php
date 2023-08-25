@@ -24,7 +24,7 @@ class CommentWrittenListener
      * @param object $event
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function handle(object $event)
+    public function handle(object $event): void
     {
         $comment_user = $event->comment->user;
         $user_comments_count = $comment_user->comments->count();

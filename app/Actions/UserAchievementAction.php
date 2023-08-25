@@ -7,7 +7,7 @@ use App\Models\User;
 
 class UserAchievementAction
 {
-    public function __invoke(int $action_count, $achievements, User $user)
+    public function __invoke(int $action_count, $achievements, User $user): void
     {
         foreach ($achievements as $achievement) {
             if ($action_count == $achievement->action_count) {
