@@ -12,13 +12,11 @@ use Tests\TestCase;
 
 class LessonWatchedAchievementTest extends TestCase
 {
-    /** @var User */
     public User $user;
 
-    /** @var Lesson */
     public Lesson $lesson;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 

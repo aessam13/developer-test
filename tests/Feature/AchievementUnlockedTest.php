@@ -13,7 +13,7 @@ use Tests\TestCase;
 
 class AchievementUnlockedTest extends TestCase
 {
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->seed(AchievementSeeder::class);

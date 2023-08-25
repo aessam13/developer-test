@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class AchievementsControllerTest extends TestCase
 {
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->seed(AchievementSeeder::class);
@@ -37,7 +37,7 @@ class AchievementsControllerTest extends TestCase
 
         $intermediate_badge = Badge::query()->where('achievements_number', 4)->first();
 
-        $response = $this->getJson('/users/' . $user->id . '/achievements');
+        $response = $this->getJson('/users/'.$user->id.'/achievements');
 
         $this->assertEquals($first_achievement->title, $response->json('unlocked_achievements')[0]);
         $this->assertEquals($second_achievement->title, $response->json('unlocked_achievements')[1]);
@@ -64,7 +64,7 @@ class AchievementsControllerTest extends TestCase
 
         $user->badges()->attach($master_badge);
 
-        $response = $this->getJson('/users/' . $user->id . '/achievements');
+        $response = $this->getJson('/users/'.$user->id.'/achievements');
 
         $this->assertEquals($last_comment_achievement->title, $response->json('unlocked_achievements')[0]);
         $this->assertEquals($last_lesson_achievement->title, $response->json('unlocked_achievements')[1]);
@@ -89,7 +89,7 @@ class AchievementsControllerTest extends TestCase
             ->where('type', AchievementTypes::Lesson)
             ->first();
 
-        $response = $this->getJson('/users/' . $user->id . '/achievements');
+        $response = $this->getJson('/users/'.$user->id.'/achievements');
 
         $this->assertEmpty($response->json('unlocked_achievements'));
         $this->assertEquals($first_achievement->title, $response->json('next_available_achievements')[0]);
@@ -103,7 +103,7 @@ class AchievementsControllerTest extends TestCase
         /* @var User $user*/
         $user = User::factory()->create();
 
-        $response = $this->getJson('/users/' . $user->id . '/achievements');
+        $response = $this->getJson('/users/'.$user->id.'/achievements');
 
         $this->assertEquals(4, $response->json('remaining_to_unlock_next_badge'));
     }
@@ -118,7 +118,7 @@ class AchievementsControllerTest extends TestCase
             ->first();
         $user->achievements()->attach($first_achievement);
 
-        $response = $this->getJson('/users/' . $user->id . '/achievements');
+        $response = $this->getJson('/users/'.$user->id.'/achievements');
 
         $this->assertEquals(3, $response->json('remaining_to_unlock_next_badge'));
     }

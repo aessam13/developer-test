@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->seed(BadgeSeeder::class);
@@ -21,7 +21,7 @@ class UserTest extends TestCase
         $user = User::factory()->create();
         $beginner_badge = Badge::query()->where('achievements_number', 0)->first();
 
-        $response = $this->getJson('/users/' . $user->id . '/achievements');
+        $response = $this->getJson('/users/'.$user->id.'/achievements');
         $this->assertEquals($beginner_badge->title, $response->json('current_badge'));
     }
 

@@ -18,7 +18,7 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var $fillable array
+     * @var array
      */
     protected $fillable = [
         'name',
@@ -29,7 +29,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var $hidden array
+     * @var array
      */
     protected $hidden = [
         'password',
@@ -39,7 +39,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be cast to native types.
      *
-     * @var $casts array
+     * @var array
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -48,7 +48,7 @@ class User extends Authenticatable
     /**
      * The comments that belong to the user.
      */
-    public function comments() : HasMany
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
@@ -56,7 +56,7 @@ class User extends Authenticatable
     /**
      * The lessons that a user has access to.
      */
-    public function lessons() : BelongsToMany
+    public function lessons(): BelongsToMany
     {
         return $this->belongsToMany(Lesson::class);
     }
@@ -64,7 +64,7 @@ class User extends Authenticatable
     /**
      * The lessons that a user has watched.
      */
-    public function watched() : BelongsToMany
+    public function watched(): BelongsToMany
     {
         return $this->belongsToMany(Lesson::class)->wherePivot('watched', true);
     }
@@ -72,7 +72,7 @@ class User extends Authenticatable
     /**
      * The achievements that a user has accomplished.
      */
-    public function achievements() : BelongsToMany
+    public function achievements(): BelongsToMany
     {
         return $this->belongsToMany(Achievement::class);
     }
@@ -80,12 +80,12 @@ class User extends Authenticatable
     /**
      * The badges that a user has earned.
      */
-    public function badges() : BelongsToMany
+    public function badges(): BelongsToMany
     {
         return $this->belongsToMany(Badge::class);
     }
 
-    public function next_available_achievements() : Collection
+    public function next_available_achievements(): Collection
     {
         $current_comment_achievements = $this->achievements()->whereType(AchievementTypes::Comment)->orderByDesc('action_count')->first();
         $current_lesson_achievements = $this->achievements()->whereType(AchievementTypes::Lesson)->orderByDesc('action_count')->first();
@@ -117,7 +117,7 @@ class User extends Authenticatable
         return $next_badge?->title;
     }
 
-    public function remaining_to_unlock_next_badge() : int
+    public function remaining_to_unlock_next_badge(): int
     {
         $badges = $this->badges()->orderBy('achievements_number')->get();
 

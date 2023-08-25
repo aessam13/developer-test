@@ -14,7 +14,7 @@ class CommentWrittenAchievementTest extends TestCase
 {
     public User $user;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 

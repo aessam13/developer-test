@@ -9,14 +9,11 @@ class UserObserver
 {
     /**
      * Handle the Product "created" event.
-     *
-     * @param  User  $user
-     * @return void
      */
     public function created(User $user): void
     {
         $badge = Badge::query()->where('achievements_number', 0)->first();
-        if (!$badge) {
+        if (! $badge) {
             return;
         }
         $user->badges()->attach($badge);

@@ -12,7 +12,7 @@ class Lesson extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var $fillable array
+     * @var array
      */
     protected $fillable = [
         'title',
